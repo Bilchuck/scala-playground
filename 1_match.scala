@@ -33,13 +33,13 @@ assert(nTh(3, List(1,2,3,4)) == 4)
 // you can use list.sortWith function to sort a list
 def median(l: List[Int]): Float = {
   var sorted = l.sortWith((x,y) => x < y)
-  var med = l.length / 2
-  if (med % 1 == med) nTh(med, l)
-  else {
-    var lower = (med - 0.5).toInt
-    var higher = (med + 0.5).toInt
-    ( nTh(lower, sorted) + nTh(higher, sorted) ) / 2
-  }
+  var med = l.length.toFloat / 2
+  if (med % 1 == 0) (
+    nTh(med.toInt - 1, sorted) + nTh(med.toInt, sorted)
+  ).toFloat / 2
+  else nTh((med - 0.5).toInt, sorted)
 }
 
-println(median(List(1,2,3,4,5)))
+assert(median(List(1,2,3,4,5)) == 3)
+assert(median(List(1,5,3,4,2)) == 3)
+assert(median(List(4,1,3,2)) == 2.5)
